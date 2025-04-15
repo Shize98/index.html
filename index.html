@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+
+const questions = [
+  { question: "What’s your ideal weekend?", options: ["Relaxing at home", "Going on an adventure", "Baking something delicious", "Hanging out with friends"] },
+  { question: "Pick a flavor profile:", options: ["Sweet", "Savory", "Fruity", "Chocolatey"] },
+  { question: "How do you handle stress?", options: ["Eat comfort food", "Go for a walk", "Watch a cozy show", "Sleep it off"] },
+];
+
+const donutResults = [
+  "You’re a classic **Glazed Donut**—sweet, simple, and loved by all!",
+  "You’re a **Jelly-Filled Donut**—a little mysterious but full of surprises!",
+  "You’re a **Chocolate Donut**—rich, deep, and full of love!",
+  "You’re a **Cinnamon Roll Donut**—warm, comforting, and absolutely delightful!",
+];
+
+export default function DonutQuiz() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [result, setResult] = useState(null);
+
+  const handleAnswer = (option) => {
+    const newAnswers = [...answers, option];
+    setAnswers(newAnswers);
+    if (step === questions.length - 1) {
+      setResult(donutResults[Math.floor(Math.random() * donutResults.length)]);
+    } else {
+      setStep(step + 1);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center p-6 bg-yellow-100 min-h-screen">
+      <motion.h1 className="text-3xl font-bold text-pink-600" animate={{ scale: 1.1 }}>
+        Welcome, Buttercup! 💛🍩
+      </motion.h1>
+      <p className="text-lg text-gray-700 mt-4">Let’s find out what kind of donut you are today!</p>
+      <Card className="mt-6 p-6 bg-white shadow-lg">
+        <CardContent>
+          {result ? (
+            <motion.p className="text-xl text-center text-purple-700" animate={{ opacity: [0, 1] }}>
+              {result}
+            </motion.p>
+          ) : (
+            <div>
+              <h2 className="text-lg font-bold text-gray-800">{questions[step].question}</h2>
+              <div className="mt-4 flex flex-col gap-2">
+                {questions[step].options.map((option, index) => (
+                  <Button key={index} onClick={() => handleAnswer(option)} className="bg-pink-500 text-white hover:bg-pink-700">
+                    {option}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
