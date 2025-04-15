@@ -1,7 +1,17 @@
+// index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import DonutQuiz from "./DonutQuiz";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <DonutQuiz />
+  </React.StrictMode>
+);
+
+// DonutQuiz.js
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 const questions = [
   { question: "What’s your ideal weekend?", options: ["Relaxing at home", "Going on an adventure", "Baking something delicious", "Hanging out with friends"] },
@@ -10,10 +20,10 @@ const questions = [
 ];
 
 const donutResults = [
-  "You’re a classic **Glazed Donut**—sweet, simple, and loved by all!",
-  "You’re a **Jelly-Filled Donut**—a little mysterious but full of surprises!",
-  "You’re a **Chocolate Donut**—rich, deep, and full of love!",
-  "You’re a **Cinnamon Roll Donut**—warm, comforting, and absolutely delightful!",
+  "You’re a classic Glazed Donut—sweet, simple, and loved by all!",
+  "You’re a Jelly-Filled Donut—a little mysterious but full of surprises!",
+  "You’re a Chocolate Donut—rich, deep, and full of love!",
+  "You’re a Cinnamon Roll Donut—warm, comforting, and absolutely delightful!",
 ];
 
 export default function DonutQuiz() {
@@ -32,31 +42,38 @@ export default function DonutQuiz() {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 bg-yellow-100 min-h-screen">
-      <motion.h1 className="text-3xl font-bold text-pink-600" animate={{ scale: 1.1 }}>
-        Welcome, Buttercup! 💛🍩
-      </motion.h1>
-      <p className="text-lg text-gray-700 mt-4">Let’s find out what kind of donut you are today!</p>
-      <Card className="mt-6 p-6 bg-white shadow-lg">
-        <CardContent>
-          {result ? (
-            <motion.p className="text-xl text-center text-purple-700" animate={{ opacity: [0, 1] }}>
-              {result}
-            </motion.p>
-          ) : (
-            <div>
-              <h2 className="text-lg font-bold text-gray-800">{questions[step].question}</h2>
-              <div className="mt-4 flex flex-col gap-2">
-                {questions[step].options.map((option, index) => (
-                  <Button key={index} onClick={() => handleAnswer(option)} className="bg-pink-500 text-white hover:bg-pink-700">
-                    {option}
-                  </Button>
-                ))}
-              </div>
+    <div style={{ fontFamily: 'sans-serif', padding: '20px', background: '#FFF7E6', minHeight: '100vh', textAlign: 'center' }}>
+      <h1 style={{ color: '#FF69B4' }}>Welcome, Buttercup!</h1>
+      <p>Let’s find out what kind of donut you are today!</p>
+      <div style={{ marginTop: '20px', backgroundColor: '#fff', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+        {result ? (
+          <p style={{ color: '#6B21A8', fontSize: '18px' }}>{result}</p>
+        ) : (
+          <div>
+            <h2>{questions[step].question}</h2>
+            <div style={{ marginTop: '10px' }}>
+              {questions[step].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswer(option)}
+                  style={{
+                    display: 'block',
+                    margin: '10px auto',
+                    padding: '10px 20px',
+                    backgroundColor: '#FF69B4',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {option}
+                </button>
+              ))}
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
